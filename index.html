@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🏨 Hotel Management System</h1>
+                <div class="user-info">
+                    <span class="current-date" id="currentDate"></span>
+                    <button class="btn btn-secondary" id="exportDataBtn">Export Data</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <button class="nav-link active" data-section="dashboard">
+                        📊 Dashboard
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-section="rooms">
+                        🏠 Rooms
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-section="reservations">
+                        📅 Reservations
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-section="guests">
+                        👥 Guests
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-section="staff">
+                        👨‍💼 Staff
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-section="reports">
+                        📈 Reports
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <div class="dashboard-date" id="dashboardDate"></div>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Total Rooms</h3>
+                            <span class="icon">🏠</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-value" id="totalRooms">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Occupied Rooms</h3>
+                            <span class="icon">🔴</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-value" id="occupiedRooms">0</div>
+                            <div class="occupancy-rate">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="occupancyProgress"></div>
+                                </div>
+                                <span class="percentage" id="occupancyPercentage">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Daily Revenue</h3>
+                            <span class="icon">💰</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-value" id="dailyRevenue">$0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Active Reservations</h3>
+                            <span class="icon">📋</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-value" id="activeReservations">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="alerts-section">
+                        <h3>Alerts & Notifications</h3>
+                        <div class="alerts-container" id="alertsContainer">
+                            <div class="alert alert-info">
+                                <span class="alert-icon">ℹ️</span>
+                                <span>System initialized successfully</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h3>Recent Check-ins/Check-outs</h3>
+                        <div class="activity-list" id="recentActivity">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rooms Section -->
+            <section id="rooms" class="section">
+                <div class="section-header">
+                    <h2>Room Management</h2>
+                    <button class="btn btn-primary" id="addRoomBtn">Add Room</button>
+                </div>
+                
+                <div class="rooms-grid" id="roomsGrid">
+                    <!-- Dynamic room cards -->
+                </div>
+            </section>
+
+            <!-- Reservations Section -->
+            <section id="reservations" class="section">
+                <div class="section-header">
+                    <h2>Reservation Management</h2>
+                    <button class="btn btn-primary" id="addReservationBtn">New Reservation</button>
+                </div>
+                
+                <div class="reservations-filters">
+                    <input type="text" id="reservationSearch" placeholder="Search reservations..." class="search-input">
+                    <select id="reservationStatusFilter" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="checked-in">Checked In</option>
+                        <option value="checked-out">Checked Out</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                
+                <div class="reservations-table">
+                    <table id="reservationsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Guest</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Guests Section -->
+            <section id="guests" class="section">
+                <div class="section-header">
+                    <h2>Guest Management</h2>
+                    <button class="btn btn-primary" id="addGuestBtn">Add Guest</button>
+                </div>
+                
+                <div class="guests-search">
+                    <input type="text" id="guestSearch" placeholder="Search guests by name or contact..." class="search-input">
+                </div>
+                
+                <div class="guests-table">
+                    <table id="guestsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Total Stays</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guestsTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Staff Section -->
+            <section id="staff" class="section">
+                <div class="section-header">
+                    <h2>Staff Management</h2>
+                    <button class="btn btn-primary" id="addStaffBtn">Add Staff</button>
+                </div>
+                
+                <div class="staff-table">
+                    <table id="staffTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Contact</th>
+                                <th>Shift</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section">
+                <div class="section-header">
+                    <h2>Reports & Analytics</h2>
+                </div>
+                
+                <div class="reports-controls">
+                    <div class="date-range">
+                        <label>From:</label>
+                        <input type="date" id="reportDateFrom" class="date-input">
+                        <label>To:</label>
+                        <input type="date" id="reportDateTo" class="date-input">
+                    </div>
+                    <select id="reportType" class="filter-select">
+                        <option value="occupancy">Occupancy Report</option>
+                        <option value="revenue">Revenue Report</option>
+                        <option value="guest-activity">Guest Activity</option>
+                    </select>
+                    <button class="btn btn-primary" id="generateReportBtn">Generate Report</button>
+                </div>
+                
+                <div class="report-content" id="reportContent">
+                    <!-- Dynamic report content -->
+                </div>
+                
+                <div class="export-options" id="exportOptions" style="display: none;">
+                    <button class="btn btn-secondary" id="exportCSVBtn">Export as CSV</button>
+                    <button class="btn btn-secondary" id="exportPDFBtn">Export as PDF</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Room Modal -->
+    <div id="roomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="roomModalTitle">Add Room</h3>
+                <span class="close" id="closeRoomModal">&times;</span>
+            </div>
+            <form id="roomForm">
+                <div class="form-group">
+                    <label for="roomNumber">Room Number:</label>
+                    <input type="text" id="roomNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="roomType">Room Type:</label>
+                    <select id="roomType" required>
+                        <option value="">Select Type</option>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="suite">Suite</option>
+                        <option value="deluxe">Deluxe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="roomPrice">Price per Night ($):</label>
+                    <input type="number" id="roomPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="roomStatus">Status:</label>
+                    <select id="roomStatus" required>
+                        <option value="available">Available</option>
+                        <option value="occupied">Occupied</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Room</button>
+                    <button type="button" class="btn btn-secondary" id="cancelRoomBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="reservationModalTitle">New Reservation</h3>
+                <span class="close" id="closeReservationModal">&times;</span>
+            </div>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="reservationGuest">Guest:</label>
+                    <select id="reservationGuest" required>
+                        <option value="">Select Guest</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reservationRoom">Room:</label>
+                    <select id="reservationRoom" required>
+                        <option value="">Select Room</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="checkInDate">Check-in Date:</label>
+                    <input type="date" id="checkInDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkOutDate">Check-out Date:</label>
+                    <input type="date" id="checkOutDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="reservationStatus">Status:</label>
+                    <select id="reservationStatus" required>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="checked-in">Checked In</option>
+                        <option value="checked-out">Checked Out</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Reservation</button>
+                    <button type="button" class="btn btn-secondary" id="cancelReservationBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Guest Modal -->
+    <div id="guestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="guestModalTitle">Add Guest</h3>
+                <span class="close" id="closeGuestModal">&times;</span>
+            </div>
+            <form id="guestForm">
+                <div class="form-group">
+                    <label for="guestName">Full Name:</label>
+                    <input type="text" id="guestName" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestPhone">Phone:</label>
+                    <input type="tel" id="guestPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestEmail">Email:</label>
+                    <input type="email" id="guestEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestAddress">Address:</label>
+                    <textarea id="guestAddress" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Guest</button>
+                    <button type="button" class="btn btn-secondary" id="cancelGuestBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Staff Modal -->
+    <div id="staffModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="staffModalTitle">Add Staff</h3>
+                <span class="close" id="closeStaffModal">&times;</span>
+            </div>
+            <form id="staffForm">
+                <div class="form-group">
+                    <label for="staffName">Full Name:</label>
+                    <input type="text" id="staffName" required>
+                </div>
+                <div class="form-group">
+                    <label for="staffRole">Role:</label>
+                    <select id="staffRole" required>
+                        <option value="">Select Role</option>
+                        <option value="reception">Reception</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="security">Security</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="staffPhone">Phone:</label>
+                    <input type="tel" id="staffPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="staffEmail">Email:</label>
+                    <input type="email" id="staffEmail">
+                </div>
+                <div class="form-group">
+                    <label for="staffShift">Shift:</label>
+                    <select id="staffShift" required>
+                        <option value="morning">Morning (6AM - 2PM)</option>
+                        <option value="afternoon">Afternoon (2PM - 10PM)</option>
+                        <option value="night">Night (10PM - 6AM)</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Staff</button>
+                    <button type="button" class="btn btn-secondary" id="cancelStaffBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
